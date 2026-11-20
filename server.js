@@ -3,7 +3,7 @@ import { networkInterfaces } from 'node:os';
 
 const port = Number(process.env.PORT || 3100);
 const host = process.env.HOST || '0.0.0.0';
-const { app, db } = await createApp({ dbPath: process.env.DB_PATH || 'data/orders.sqlite', adminPassword: process.env.ADMIN_PASSWORD || '', secureCookies: process.env.COOKIE_SECURE === 'true' });
+const { app, db } = await createApp({ dbPath: process.env.DB_PATH || 'data/orders.sqlite', adminUsername: process.env.ADMIN_USERNAME ?? 'admin', adminPassword: process.env.ADMIN_PASSWORD ?? 'admin', secureCookies: process.env.COOKIE_SECURE === 'true' });
 const server = app.listen(port, host, () => {
   console.log(`點餐頁：http://localhost:${port}`);
   console.log(`管理後台：http://localhost:${port}/admin`);
