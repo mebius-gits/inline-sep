@@ -127,3 +127,21 @@ test('default admin credentials work and configuration changes revoke old sessio
     assert.equal((await login('organizer','new-password')).status,200);
   } finally { await new Promise(resolve=>server.close(resolve)); fixture.db.close(); await rm(dir,{recursive:true,force:true}); }
 });
+
+test('split notes are listed in bag-number order, not submission order',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'inline-sep-sort-'));
+  const fixture=await createApp({dbPath:join(dir,'sort.sqlite'),adminUsername:'admin',adminPassword:'sort-test-password'});
+  const server=fixture.app.listen(0,'127.0.0.1'); await new Promise(resolve=>server.once('listening',resolve));
+  const base=`http://127.0.0.1:${server.address().port}`;
+  const headers={'Content-Type':'application/json','X-Requested-With':'inline-sep'};
+  const post=(path,body,extra={})=>fetch(base+path,{method:'POST',headers:{...headers,...extra},body:JSON.stringify(body)});
+  try {
+    const roundId=(await (await fetch(base+'/api/menu')).json()).round.id;
+    for (const studentId of ['B11200015','B11200003','B11300007','B11200010']) {
+      assert.equal((await post('/api/orders',{studentId,roundId,requestKey:randomUUID(),items:[{id:127962,quantity:1,unitPrice:75}]})).status,201);
+    }
+    const cookie=(await post('/api/admin/login',{username:'admin',password:'sort-test-password'})).headers.get('set-cookie').split(';')[0];
+    const notes=(await (await fetch(`${base}/api/admin/report?roundId=${roundId}`,{headers:{...headers,Cookie:cookie}})).json()).notes;
+    assert.deepEqual(notes.split('\n').filter(line=>line.startsWith('號碼')).map(line=>line.split('：')[0]),['號碼 003','號碼 007','號碼 010','號碼 015']);
+  } finally { await new Promise(resolve=>server.close(resolve)); fixture.db.close(); await rm(dir,{recursive:true,force:true}); }
+});
