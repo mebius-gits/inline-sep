@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ed6945"><meta name="description" content="師園鹽酥雞團購分單：填學號、選餐點，每人上限 NT$150。">
+  <title>師園鹽酥雞｜一起點餐</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css"><script src="/order.js" type="module"></script>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a class="wordmark" href="/">一起點餐<span class="wordmark-divider">/</span><span class="wordmark-sub">學號分單</span></a><a class="header-link" href="/admin">主揪後台</a></div></header>
+  <main class="storefront">
+    <div class="hero"><img src="/assets/hero.jpg" alt="師園鹽酥雞餐點形象照" fetchpriority="high"><span class="hero-label">師大夜市・團購點餐</span></div>
+    <section class="restaurant"><div><div class="eyebrow">SHI YUAN · GROUP ORDER</div><h1>師園鹽酥雞</h1><p class="muted address">臺北市大安區師大路39巷14號 <span class="address-dot">·</span> <a href="tel:0223633999">02-2363-3999</a></p></div><span id="round-status" class="badge">載入中</span></section>
+    <section class="group-banner"><div class="group-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 8V6a4 4 0 0 1 8 0v2M5 8h14l1 13H4L5 8Z"/></svg></div><div><h2 id="round-title">一起訂餐，分開裝袋。</h2><p>填入學號、選好餐點，由主揪統一訂購。</p></div><div class="budget-label"><span>每人餐點上限</span><strong>NT$150</strong></div></section>
+    <div class="notice"><span class="notice-icon" aria-hidden="true">i</span><p>每個學號每團限登記一次。送出後如需修改，請聯絡主揪。<span>此頁為團購登記，餐點由主揪彙整後向店家下單。</span></p></div>
+    <div id="load-error" class="error-box" hidden></div>
+    <nav class="category-nav" aria-label="餐點分類" id="category-nav"></nav>
+    <div class="ordering-layout"><div id="menu-sections" aria-busy="true"><div class="loading">正在載入菜單…</div></div><div id="cart-anchor">
+      <section class="cart-card" id="cart-card" aria-labelledby="cart-title">
+        <div class="cart-heading"><h2 id="cart-title">我的餐點 <span id="cart-count" class="count">0</span></h2><button type="button" id="close-cart" class="icon-button mobile-only" aria-label="關閉購物車">×</button></div>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="budget-meter"><div><span>餐點小計</span><strong id="cart-total">NT$0</strong></div><progress id="budget-progress" max="150" value="0" aria-label="已使用餐點預算"></progress><p id="budget-remaining">還可以點 NT$150</p></div>
+        <form id="order-form"><label for="student-id">學號 <span class="required">必填</span></label><input id="student-id" name="studentId" placeholder="請輸入你的學號" autocomplete="off" autocapitalize="characters" spellcheck="false" pattern="[A-Za-z0-9][A-Za-z0-9\-]{2,19}" minlength="3" maxlength="20" required><p class="field-hint">3–20 位英文字母、數字或連字號</p>
+          <label for="order-note">口味／調味備註 <span class="optional">選填</span></label><textarea id="order-note" name="note" placeholder="例如：小辣、不加蒜，或照店家一般做法" maxlength="200" rows="2"></textarea>
+          <p id="submit-error" class="form-error" role="alert" hidden></p><button id="submit-order" class="primary full" type="submit" disabled>送出我的餐點</button><p class="cart-footnote">每人上限 NT$150・不含外送費</p>
+        </form>
+      </section>
+    </div></div>
+    <footer class="page-footer"><p>師園鹽酥雞 · 團購分單</p><p>菜單依提供的店家頁面建置，價格調整由主揪更新。</p><a href="https://inline.app/order/-MtuYS4qM9wHy81NQb_Y:inline-live-2/-MtuYSJ1FucibMg0H5LI?language=zh-tw" target="_blank" rel="noopener noreferrer">查看店家原始點餐頁</a></footer>
+  </main>
+  <div class="mobile-cart-bar"><button id="open-cart" class="primary"><span><span id="mobile-count" class="button-count">0</span> 查看餐點／填學號</span><strong id="mobile-total">NT$0</strong></button></div>
+  <dialog id="cart-dialog" class="cart-dialog" aria-label="確認餐點與填寫學號"></dialog>
+  <dialog id="receipt-dialog" class="receipt-dialog" aria-labelledby="receipt-title"><div class="success-icon" aria-hidden="true">✓</div><p class="eyebrow">ORDER RECEIVED</p><h2 id="receipt-title">你的餐點已登記！</h2><p class="muted">主揪已收到，接下來就等一起開吃。</p><div id="receipt-content"></div><p class="field-hint">這是團購登記確認，並非店家接單通知。<br>需要修改時，請將學號告訴主揪。</p><button id="close-receipt" class="primary full">完成</button></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body></html>
