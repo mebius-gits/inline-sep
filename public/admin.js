@@ -8,32 +8,17 @@ async function boot() {
   try {
     session=await api('/api/admin/session');
     if (session.authenticated) await enterDashboard();
-    else {
-      showLogin();
-      if (session.setupRequired) {
-        $('#login-title').textContent='設定你的主揪後台';
-        $('#login-description').textContent=session.canSetupLocal?'首次使用，請建立至少 12 個字元的後台密碼。之後使用這組密碼登入。':'請先在伺服器本機開啟 localhost 的後台設定密碼，或由管理者設定 ADMIN_PASSWORD。';
-        $('#login-form').hidden=!session.canSetupLocal;
-        $('#confirm-password-wrap').hidden=false;
-        $('#confirm-password').required=true;
-        $('#admin-password').minLength=12;
-        $('#admin-password').autocomplete='new-password';
-        $('#login-submit').textContent='建立密碼並進入後台';
-      }
-    }
+    else showLogin();
   } catch(error) { showError(error); }
   finally { $('#admin-loading').hidden=true; }
 }
 $('#login-form').addEventListener('submit', async event => {
   event.preventDefault(); $('#login-error').hidden=true;
   const password=$('#admin-password').value;
-  if (session.setupRequired && password!==$('#confirm-password').value) { $('#login-error').textContent='兩次輸入的密碼不同'; $('#login-error').hidden=false; return; }
+  const username=$('#admin-username').value.trim();
   $('#login-submit').disabled=true;
   try {
-    await api(`/api/admin/${session.setupRequired?'setup':'login'}`,{ method:'POST',body:json({password}) });
-    session.setupRequired=false;
-    $('#confirm-password-wrap').hidden=true; $('#confirm-password').required=false; $('#admin-password').minLength=0;
-    $('#admin-password').autocomplete='current-password'; $('#login-title').textContent='主揪，歡迎回來。'; $('#login-description').textContent='登入後查看每位同學的餐點，輕鬆彙整分單。'; $('#login-submit').textContent='登入後台';
+    await api('/api/admin/login',{ method:'POST',body:json({username,password}) });
     await enterDashboard();
   } catch(error) { $('#login-error').textContent=error.message; $('#login-error').hidden=false; }
   finally { $('#login-submit').disabled=false; }

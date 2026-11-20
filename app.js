@@ -19,20 +19,23 @@ async function verifyPassword(password, stored) {
   const expected = Buffer.from(hex, 'hex');
   return expected.length === hash.length && timingSafeEqual(hash, expected);
 }
-function validatePassword(password) {
-  if (typeof password !== 'string' || password.length < 12 || password.length > 256) fail(400, '後台密碼請使用 12–256 個字元');
-}
-function localSetupAllowed(req) {
-  return ['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(req.socket.remoteAddress)
-    && ['localhost', '127.0.0.1', '[::1]'].includes(req.hostname)
-    && !req.headers['x-forwarded-for'] && !req.headers.forwarded;
-}
-
-export async function createApp({ dbPath = 'data/orders.sqlite', adminPassword = '', secureCookies = false } = {}) {
+export async function createApp({ dbPath = 'data/orders.sqlite', adminUsername = 'admin', adminPassword = 'admin', secureCookies = false } = {}) {
+  if (typeof adminUsername !== 'string' || !adminUsername.trim() || adminUsername.length > 100) throw new Error('ADMIN_USERNAME 請設定為 1–100 個字元');
+  if (typeof adminPassword !== 'string' || !adminPassword || adminPassword.length > 256) throw new Error('ADMIN_PASSWORD 請設定為 1–256 個字元');
+  adminUsername = adminUsername.trim();
   const db = openDatabase(dbPath);
-  if (adminPassword && !db.prepare("SELECT value FROM settings WHERE key='admin_hash'").get()) {
-    validatePassword(adminPassword);
-    db.prepare("INSERT OR IGNORE INTO settings(key,value) VALUES('admin_hash',?)").run(await passwordHash(adminPassword));
+  const storedHash = db.prepare("SELECT value FROM settings WHERE key='admin_hash'").get()?.value;
+  const storedUsername = db.prepare("SELECT value FROM settings WHERE key='admin_username'").get()?.value;
+  // Environment configuration is authoritative, including on existing databases.
+  // Preserve sessions on ordinary restarts; revoke them when credentials change.
+  if (storedUsername !== adminUsername || !await verifyPassword(adminPassword, storedHash)) {
+    const hash = await passwordHash(adminPassword);
+    transaction(db, () => {
+      const set = db.prepare('INSERT INTO settings(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value');
+      set.run('admin_hash', hash);
+      set.run('admin_username', adminUsername);
+      db.prepare('DELETE FROM sessions').run();
+    });
   }
   const app = express();
   app.disable('x-powered-by');
@@ -88,21 +91,11 @@ export async function createApp({ dbPath = 'data/orders.sqlite', adminPassword =
     const result = createOrder(db, req.body);
     res.status(result.replay ? 200 : 201).json(result.order);
   });
-  app.get('/api/admin/session', (req, res) => res.json({ authenticated: isAuthenticated(req), setupRequired: !db.prepare("SELECT value FROM settings WHERE key='admin_hash'").get(), canSetupLocal: localSetupAllowed(req) }));
-  app.post('/api/admin/setup', limiter('login', 10, 15*60000), async (req, res) => {
-    if (!localSetupAllowed(req)) fail(403, '請在伺服器本機使用 localhost 網址開啟後台設定密碼，或使用 ADMIN_PASSWORD 環境變數');
-    validatePassword(req.body?.password);
-    const hash = await passwordHash(req.body.password);
-    transaction(db, () => {
-      if (db.prepare("SELECT value FROM settings WHERE key='admin_hash'").get()) fail(409, '後台已設定，請直接登入');
-      db.prepare("INSERT INTO settings(key,value) VALUES('admin_hash',?)").run(hash);
-    });
-    startSession(res);
-    res.status(201).json({ ok: true });
-  });
+  app.get('/api/admin/session', (req, res) => res.json({ authenticated: isAuthenticated(req) }));
   app.post('/api/admin/login', limiter('login', 10, 15*60000), async (req, res) => {
     const stored = db.prepare("SELECT value FROM settings WHERE key='admin_hash'").get()?.value;
-    if (!await verifyPassword(req.body?.password, stored)) fail(401, '密碼不正確');
+    const validPassword = await verifyPassword(req.body?.password, stored);
+    if (req.body?.username !== adminUsername || !validPassword) fail(401, '帳號或密碼不正確');
     const old = readToken(req);
     if (old) db.prepare('DELETE FROM sessions WHERE token_hash=?').run(digest(old));
     startSession(res);

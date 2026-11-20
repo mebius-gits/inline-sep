@@ -9,3 +9,55 @@
 @media(max-width:600px){.site-header{height:54px}.header-inner{margin:0 16px;padding:0}.wordmark{font-size:.9375rem}.wordmark-divider{margin:0 8px}.wordmark-sub{font-size:.8125rem}.header-link{font-size:.8125rem;padding:4px 10px}.hero-label{left:16px;bottom:12px;font-size:.6875rem;padding:3px 8px}.restaurant{margin:0 16px;padding:20px 0;align-items:flex-start;gap:8px}.restaurant .eyebrow{font-size:.625rem;letter-spacing:.1em}.restaurant h1{font-size:1.8rem}.address{font-size:.8125rem;line-height:1.7}.address a{display:block}.address-dot{display:none}.badge{font-size:.75rem;padding:4px 8px;margin-top:25px}.group-banner{margin:16px 16px 0;padding:16px;gap:12px;flex-wrap:wrap}.group-icon{width:37px;height:37px}.group-icon svg{width:22px;height:22px}.group-banner h2{font-size:.9375rem}.group-banner p{font-size:.8125rem}.budget-label{width:100%;border-left:0;border-top:1px solid #eed8cf;padding:10px 0 0;display:flex;justify-content:space-between;align-items:center}.budget-label strong{font-size:1.25rem}.budget-label span{font-size:.8125rem}.notice{margin:0 16px;padding:15px 0 20px;font-size:.75rem}.category-nav{margin:0;padding:0 16px;gap:24px}.category-nav a{font-size:.875rem;padding:13px 0 10px}.ordering-layout{margin:0 16px;padding-top:24px}.menu-grid{grid-template-columns:1fr;gap:0;border-top:1px solid var(--line)}.menu-category{margin-bottom:30px;scroll-margin-top:70px}.section-heading{margin-bottom:12px}.section-heading h2{font-size:1.1rem}.section-heading span{font-size:.75rem}.meal-card{border:0;border-bottom:1px solid var(--line);border-radius:0;padding:16px 0;min-height:140px;gap:0}.meal-card.selected{background:#fffaf7;padding-left:12px;padding-right:12px}.meal-image{width:88px;height:88px;grid-column:2;grid-row:1/3}.meal-info{padding-right:12px}.meal-info h3{font-size:1rem}.meal-price{font-size:.875rem;margin-top:9px}.meal-bottom{grid-column:1;grid-row:2;padding-right:14px;align-self:end}.meal-card:not(:has(.meal-image)){min-height:112px}.meal-card:not(:has(.meal-image)) .meal-info{grid-column:1}.meal-card:not(:has(.meal-image)) .meal-bottom{grid-column:2;grid-row:1/3;padding:0;flex-direction:column;align-items:flex-end;justify-content:center;gap:8px}.quantity-button{width:36px;height:36px}.selected-label{font-size:.75rem}.seasoning{padding:20px}.page-footer{margin:30px 16px 72px;padding:24px 0 35px;font-size:.75rem}.mobile-cart-bar{padding-left:16px;padding-right:16px}.receipt-dialog{padding:28px 22px}.admin-main{padding:24px 16px 40px}.admin-title-row{margin-bottom:20px;gap:16px}.admin-title-row h1{font-size:1.6rem}.admin-actions{width:100%;gap:8px}.admin-actions .primary,.admin-actions .secondary{flex:1;font-size:.8125rem;padding:8px 12px}.round-toolbar{padding:14px;gap:12px}.round-select{gap:10px}.round-select label{font-size:.8125rem}.round-select select{font-size:.875rem}.round-toolbar .admin-actions{justify-content:space-between}.round-toolbar .badge{margin:0}.stats-grid{grid-template-columns:1fr 1fr;gap:10px}.stat-card{padding:16px}.stat-value{font-size:1.55rem}.stat-card>span{font-size:.75rem}.stat-card small{font-size:.6875rem}.admin-tabs{gap:22px;margin-bottom:18px}.admin-tabs button{font-size:.875rem}.panel-head{padding:16px;gap:12px}.panel-head input{max-width:100%}.panel-head h2{font-size:1rem}th{padding:12px 14px}td{padding:14px}.notes-help{padding:20px;display:block}.notes-help .secondary{margin-top:10px}.notes-area{padding:18px;min-height:360px;font-size:.875rem}.login-shell{margin:30px 0;padding:28px 22px}.modal-form{padding:24px;width:calc(100vw - 32px)}.new-meal-form{grid-template-columns:1fr;padding:18px}.admin-body .toast{bottom:24px}.empty-state{padding:45px 18px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 @media(min-width:901px){.panel-head .admin-actions{flex-wrap:nowrap}.panel-head .admin-actions input{width:240px}.panel-head .admin-actions .secondary{white-space:nowrap}}
+
+/* Free seasoning choices, matching the restaurant's checkbox dialog. */
+.seasoning-card{display:flex;flex-direction:column;align-items:flex-start;min-height:185px;padding:16px;background:#fff;border:1px solid #dedede;border-radius:0;text-align:left;color:var(--ink)}
+.seasoning-card:hover{box-shadow:0 8px 18px #0000000d}.seasoning-card.selected{border-color:#ff8708}
+.seasoning-card-title{font-size:1rem;font-weight:500}.seasoning-card-selection{color:#686868;font-size:.875rem;margin-top:12px}
+.seasoning-card-price{display:flex;gap:9px;align-items:center;margin-top:auto;padding-top:16px;font-size:.875rem;font-weight:600}
+.seasoning-card-plus{display:grid;place-items:center;background:#ff8708;color:#fff;width:24px;height:24px;font-size:1.35rem;font-weight:400;line-height:1}
+.submit-warning{margin:4px 0 16px;padding:12px 14px;border-radius:8px;background:#fff4ee;border:1px solid #f6c7b4;font-size:.875rem;line-height:1.55}
+.submit-warning{color:#3a3a3a}.submit-warning b{color:#b42318}
+.seasoning-dialog{width:584px;border-radius:11px;max-height:calc(100dvh - 48px);color:#181818}
+.seasoning-dialog form{display:flex;flex-direction:column;max-height:calc(100dvh - 48px)}
+.seasoning-dialog-body{position:relative;padding:32px 34px 40px;overflow:auto;min-height:0}
+.seasoning-dialog h2{font-size:1.375rem;line-height:1.5;margin-bottom:8px}.seasoning-price{font-size:.9375rem;font-weight:600;margin-bottom:24px}
+.seasoning-close{position:absolute;right:16px;top:16px;border:0;background:#b3b3b3;color:white;width:24px;height:24px;border-radius:50%;padding:0;line-height:1;font-size:1.3rem}
+.seasoning-group summary{display:flex;justify-content:space-between;align-items:center;list-style:none;background:#f5f5f5;padding:8px 12px;cursor:pointer;font-size:.9375rem}
+.seasoning-group summary::-webkit-details-marker{display:none}.seasoning-group summary:after{content:"";width:7px;height:7px;border-right:1px solid #555;border-bottom:1px solid #555;transform:rotate(45deg);margin:0 10px 5px}
+.seasoning-group:not([open]) summary:after{transform:rotate(-45deg);margin-bottom:0}.seasoning-group summary small{display:block;font-size:.75rem;color:#747474}
+.seasoning-group fieldset{margin:0;padding:0;border:0;min-width:0}.seasoning-option{display:flex;align-items:center;gap:10px;padding:14px 0;margin:0;border-bottom:1px solid #ddd;color:#555;cursor:pointer;font-size:.9375rem;font-weight:400;min-height:50px}
+.seasoning-option input{appearance:auto;width:15px;height:15px;padding:0;margin:0;accent-color:#ff8708;flex-shrink:0;cursor:pointer}
+.seasoning-dialog-footer{padding:10px 34px;border-top:1px solid #d9d9d9;background:#fff;flex-shrink:0}.seasoning-dialog-footer .primary{background:#ff8708;border-radius:0;font-size:1rem;min-height:44px}.seasoning-dialog-footer .primary:hover{background:#eb7700}
+@media(max-width:600px){.seasoning-card{min-height:180px;width:100%}.seasoning-dialog{max-width:calc(100% - 24px)}.seasoning-dialog-body{padding:28px 22px}.seasoning-dialog-footer{padding:12px 22px}.seasoning-option{min-height:54px}.seasoning-close{width:30px;height:30px;right:12px;top:12px}}
+
+/* All screens share the bottom checkout action and the same student-ID dialog. */
+.ordering-layout{display:block}
+.checkout-bar{position:fixed;inset:auto 0 0;z-index:20;background:#fff;border-top:1px solid var(--line);padding:12px 24px calc(12px + env(safe-area-inset-bottom));box-shadow:0 -4px 20px #00000005}
+.checkout-bar-inner{max-width:1140px;margin:0 auto}.checkout-bar button{display:flex;justify-content:space-between;width:100%;min-height:48px;gap:12px;font-size:1rem}
+.checkout-bar .button-count{display:inline-grid;place-items:center;background:#ffffff30;min-width:25px;height:25px;border-radius:4px;font-size:.8125rem;margin-right:8px}
+.storefront>.page-footer{margin-bottom:calc(88px + env(safe-area-inset-bottom))}
+.cart-dialog{width:540px;max-width:calc(100% - 32px);max-height:90dvh;margin:auto;border-radius:12px;overscroll-behavior:contain}
+.cart-dialog .cart-card{width:100%;max-width:none;margin:0;padding:24px;border:0;box-shadow:none;border-radius:0}
+.cart-dialog .cart-items{max-height:none;overflow:visible}
+.checkout-actions{position:sticky;bottom:-24px;padding:12px 0 16px;background:#fff;border-top:1px solid var(--line)}
+body:has(.checkout-bar)>.toast{bottom:100px}
+/* Explicit grid areas reserve the image size and keep the controls below it. */
+.meal-card{min-width:0;grid-template-columns:minmax(0,1fr) 88px;grid-template-rows:minmax(88px,auto) auto;grid-template-areas:"info image" "bottom bottom";gap:12px;align-items:start}
+.meal-info{grid-area:info;min-width:0;padding-right:0;overflow-wrap:anywhere}
+.meal-image{grid-area:image;display:block;width:88px;height:88px;max-width:100%;aspect-ratio:1;object-fit:cover;align-self:start;justify-self:end}
+.meal-bottom{grid-area:bottom;min-width:0;width:100%;padding:0;display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:12px}
+.meal-controls{flex-shrink:0}
+.meal-card:not(:has(.meal-image)){min-height:132px;grid-template-rows:1fr auto;grid-template-areas:"info info" "bottom bottom"}
+.meal-card:not(:has(.meal-image)) .meal-info{grid-area:info}
+.meal-card:not(:has(.meal-image)) .meal-bottom{grid-area:bottom;flex-direction:row;align-items:center;justify-content:space-between;padding:0}
+@media(max-width:600px){
+  .meal-card,.meal-card.selected{padding:16px 0;gap:12px;min-height:168px}
+  .meal-card.selected{background:#fffaf7;box-shadow:inset 3px 0 var(--orange)}
+  .meal-card.selected .meal-info,.meal-card.selected .selected-label{padding-left:10px}
+  .meal-card:not(:has(.meal-image)){min-height:132px}
+  .checkout-bar{padding-left:16px;padding-right:16px}.checkout-bar button{font-size:.9375rem}
+  .cart-dialog{width:100%;max-width:100%;max-height:94dvh;margin:auto auto 0;border-radius:16px 16px 0 0}
+  .cart-dialog .cart-card{padding:20px 20px calc(20px + env(safe-area-inset-bottom))}
+  .checkout-actions{bottom:calc(-20px - env(safe-area-inset-bottom));padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+}
